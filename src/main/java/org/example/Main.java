@@ -1,17 +1,33 @@
 package org.example;
 
-//TIP To <b>Run</b> code, press <shortcut actionId="Run"/> or
-// click the <icon src="AllIcons.Actions.Execute"/> icon in the gutter.
+import org.example.model.Message;
+import org.example.repository.MessageRepository;
+import org.springframework.boot.CommandLineRunner;
+import org.springframework.boot.SpringApplication;
+import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.context.annotation.Bean;
+
+import java.time.LocalDateTime;
+
+@SpringBootApplication
 public class Main {
     public static void main(String[] args) {
-        //TIP Press <shortcut actionId="ShowIntentionActions"/> with your caret at the highlighted text
-        // to see how IntelliJ IDEA suggests fixing it.
-        System.out.printf("Hola mi gente como estan");
+        SpringApplication.run(Main.class, args);
+    }
 
-        for (int i = 1; i <= 5; i++) {
-            //TIP Press <shortcut actionId="Debug"/> to start debugging your code. We have set one <icon src="AllIcons.Debugger.Db_set_breakpoint"/> breakpoint
-            // for you, but you can always add more by pressing <shortcut actionId="ToggleLineBreakpoint"/>.
-            System.out.println("i = " + i);
-        }
+    @Bean
+    public CommandLineRunner demo(MessageRepository messageRepository) {
+        return (args) -> {
+            Message msg = new Message();
+            msg.setSenderId(1L);
+            msg.setReceiverId(2L);
+            msg.setContent("Hola, este es un mensaje de prueba en H2");
+            msg.setTimestamp(LocalDateTime.now());
+
+            messageRepository.save(msg);
+
+            System.out.println("Mensajes en la BD");
+            messageRepository.findAll().forEach(System.out::println);
+        };
     }
 }
