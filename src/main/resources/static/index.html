@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Página Postulante</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Roboto', sans-serif;
+        }
+    </style>
+
+</head>
+<body class="bg-light">
+
+<!-- Barra superior blanca -->
+<nav class="navbar navbar-light bg-white border-bottom py-1">
+    <div class="container">
+        <a class="navbar-brand" href="#">
+            <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTVr9h0RQJ-EZi6e1kG3smhuV4tpWRsq4_YoMrHod5DCh2etZfX" alt="Logo" width="100" height="100">
+        </a>
+        <span class="navbar-text">
+            Postulante
+        </span>
+    </div>
+</nav>
+
+<!-- Línea horizontal tricolor -->
+<div class="d-flex" style="height:5px; width:100%;">
+    <div style="background-color:blue; width:10%;opacity:0.7;"></div>
+    <div style="background-color:red; width:5%;opacity:0.7;"></div>
+    <div style="background-color:blue; width:95%; opacity:0.3;"></div>
+</div>
+
+<!-- Barra de menú azul -->
+<nav class="navbar navbar-expand-lg navbar-dark bg-primary py-1">
+    <div class="container-fluid">
+        <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+            <li class="nav-item"><a class="nav-link fw-bold" href="#">Ruta 1</a></li>
+            <li class="nav-item"><a class="nav-link fw-bold" href="#">Ruta 2</a></li>
+            <li class="nav-item"><a class="nav-link fw-bold" href="#">Ruta 3</a></li>
+            <li class="nav-item"><a class="nav-link fw-bold" href="#">Ruta 4</a></li>
+        </ul>
+    </div>
+</nav>
+
+<!-- Contenedor principal blanco -->
+<div class="container my-4 p-4 bg-white rounded shadow" id="main-container">
+
+    <!-- Título y botón volver -->
+    <div class="container my-4">
+        <div class="row align-items-start">
+            <!-- Columna izquierda: títulos -->
+            <div class="col-12 col-md-4">
+                <h1 class="display-5 fw-bold">Mis Postulaciones</h1>
+                <h2 class="fs-4 text-muted">Ofertas de empleo</h2>
+            </div>
+
+            <!-- Columna derecha: botón y línea -->
+            <div class="col-12 col-md-8 d-flex flex-column align-items-end">
+                <!-- Botón Volver arriba a la derecha -->
+                <button class="btn btn-outline-secondary btn-sm mb-2" id="volver-btn">Volver</button>
+
+                <!-- Línea tricolor debajo del botón -->
+                <div class="d-flex w-100" style="height:5px;">
+                    <div style="background-color:blue; width:10%;opacity:0.7;"></div>
+                    <div style="background-color:red; width:5%;opacity:0.7;"></div>
+                    <div style="background-color:blue; width:85%; opacity:0.3;"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Filtros -->
+    <div class="row mb-4" id="filters">
+        <div class="col-md-6 mb-2">
+            <label class="form-label fw-semibold">Filtro de selección:</label>
+            <select id="selectFilter" class="form-select form-select-sm">
+                <option value="op1">Opción 1</option>
+                <option value="op2">Opción 2</option>
+                <option value="op3">Opción 3</option>
+            </select>
+        </div>
+        <div class="col-md-6 mb-2">
+            <label class="form-label fw-semibold">Filtro de fecha:</label>
+            <input type="date" id="dateFilter" class="form-control form-control-sm">
+        </div>
+    </div>
+
+    <!-- Tabla de datos -->
+    <table class="table table-bordered table-hover table-striped align-middle" id="data-table">
+        <thead class="table-light">
+        <tr>
+            <th>Cargo - Código</th>
+            <th>Empleado</th>
+            <th>Estado Oferta</th>
+            <th>Chat</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr>
+            <td>Documento #1</td>
+            <td>---</td>
+            <td>Vigente</td>
+            <td><button class="btn btn-primary btn-sm" onclick="abrirChat(1)">Enviar mensaje</button></td>
+        </tr>
+        <tr>
+            <td>Documento #2</td>
+            <td>---</td>
+            <td>No vigente</td>
+            <td><button class="btn btn-primary btn-sm" onclick="abrirChat(2)">Enviar mensaje</button></td>
+        </tr>
+        <tr>
+            <td>Documento #3</td>
+            <td>---</td>
+            <td>Vigente</td>
+            <td><button class="btn btn-primary btn-sm" onclick="abrirChat(3)">Enviar mensaje</button></td>
+        </tr>
+        </tbody>
+    </table>
+
+    <!-- Paginación -->
+    <div class="d-flex justify-content-between align-items-center mt-5">
+        <span class="form-label fw-semibold">Total datos: 3</span>
+        <div>
+            <button class="btn btn-outline-secondary btn-sm" onclick="anteriorPagina()"> < </button>
+            <button class="btn btn-outline-secondary btn-sm" onclick="siguientePagina()"> > </button>
+        </div>
+        <span>Página 1</span>
+    </div>
+
+
+</div>
+
+<!-- Barra lateral de chat tipo Messenger -->
+<div id="chat-bar" style="position:fixed; right:-350px; top:0; width:350px; height:100%; border-left:1px solid #ccc; padding:10px; background-color:#f8f9fa; transition: right 0.3s; display:flex; flex-direction:column;">
+    <button class="btn btn-secondary btn-sm mb-2" onclick="cerrarChat()">Cerrar</button>
+    <h5>Chat con <span id="chat-receiver">Empresa1</span></h5>
+
+    <!-- Contenedor de mensajes -->
+    <div id="chat-messages" style="flex-grow:1; overflow-y:auto; border:1px solid #dee2e6; padding:10px; margin-bottom:10px; background-color:#e9ecef; border-radius:5px; word-wrap: break-word;">
+        <!-- Mensajes se cargarán aquí -->
+    </div>
+
+    <!-- Input y botón enviar -->
+    <input type="text" id="chat-input" class="form-control mb-2" placeholder="Escribe un mensaje" style="overflow-wrap: break-word;">
+    <button class="btn btn-primary w-100" onclick="sendChatMessage()">Enviar</button>
+</div>
+
+
+
+<script src="script.js?v=3"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
