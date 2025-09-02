@@ -1,6 +1,6 @@
-package org.example.repository;
+package com.tomas.chat_microservice.model.repository;
 
-import org.example.model.Message;
+import com.tomas.chat_microservice.model.model.Message;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 public interface MessageRepository extends JpaRepository<Message, Long> {

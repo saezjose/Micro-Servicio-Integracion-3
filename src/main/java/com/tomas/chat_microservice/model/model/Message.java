@@ -1,4 +1,4 @@
-package org.example.model;
+package com.tomas.chat_microservice.model.model;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
