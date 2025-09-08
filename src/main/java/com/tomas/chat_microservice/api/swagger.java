@@ -11,6 +11,6 @@ public class swagger {
 
     @GetMapping("/hello")
     public Map<String, String> hello() {
-        return Map.of("status", "ok", "message", "Swagger funcionando");
+        return Map.of("status", "ok", "message", "Swagger funcionandoo");
     }
 }
