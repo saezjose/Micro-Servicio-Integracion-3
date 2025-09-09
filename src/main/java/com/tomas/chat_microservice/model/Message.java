@@ -1,37 +1,25 @@
-package com.tomas.chat_microservice.model;
+package com.tomas.chat_microservice.Model;
 
-import jakarta.persistence.*;
-import lombok.*;
-import org.hibernate.annotations.CreationTimestamp;
-
-import java.time.Instant;
-
-@Entity
-@Table(name = "messages")
-@Getter @Setter
-@NoArgsConstructor @AllArgsConstructor @Builder
 public class Message {
-
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
-
-    // Para agrupar mensajes en una conversación
-    @Column(nullable = false)
-    private String conversationId;
-
-    // IDs de los usuarios
-    private Long senderId;
-    private Long receiverId;
-
-    // Tipo de emisor: EMPRESA o CLIENTE
-    @Enumerated(EnumType.STRING)
-    private SenderType senderType;
-
-    @Column(nullable = false, length = 1000)
+    private String sender;
+    private String receiver;
     private String content;
 
-    // Fecha de creación automática
-    @CreationTimestamp
-    private Instant createdAt;
+    public Message() {} // constructor vacío para JSON
+
+    public Message(String sender, String receiver, String content) {
+        this.sender = sender;
+        this.receiver = receiver;
+        this.content = content;
+    }
+
+    // Getters y setters
+    public String getSender() { return sender; }
+    public void setSender(String sender) { this.sender = sender; }
+
+    public String getReceiver() { return receiver; }
+    public void setReceiver(String receiver) { this.receiver = receiver; }
+
+    public String getContent() { return content; }
+    public void setContent(String content) { this.content = content; }
 }

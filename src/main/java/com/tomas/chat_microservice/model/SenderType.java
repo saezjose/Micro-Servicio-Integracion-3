@@ -1,4 +1,4 @@
-package com.tomas.chat_microservice.model;
+package com.tomas.chat_microservice.Model;
 
 public enum SenderType {
     EMPRESA,

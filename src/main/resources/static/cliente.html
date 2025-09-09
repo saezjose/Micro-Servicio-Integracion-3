@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Cliente</title>
+</head>
+<body>
+<h2>Página Cliente</h2>
+
+<button id="btnHome">Consultar /client/home</button>
+<button id="btnLogout">Cerrar Sesión</button>
+
+<pre id="output"></pre>
+
+<script>
+    const token = localStorage.getItem("token");
+    const rol = localStorage.getItem("rol");
+
+    if (!token || rol !== "CLIENTE") {
+      window.location.href = "login.html";
+    }
+
+    document.getElementById("btnHome").addEventListener("click", async () => {
+      const response = await fetch("http://localhost:8080/client/home", {
+        headers: { "Authorization": "Bearer " + token }
+      });
+
+      const data = await response.json();
+      document.getElementById("output").innerText = JSON.stringify(data, null, 2);
+    });
+
+    document.getElementById("btnLogout").addEventListener("click", () => {
+      localStorage.clear();
+      window.location.href = "login.html";
+    });
+</script>
+</body>
+</html>

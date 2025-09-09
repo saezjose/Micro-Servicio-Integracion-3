@@ -1,7 +1,7 @@
 package com.tomas.chat_microservice.repository;
 
-import com.tomas.chat_microservice.model.Message;
-import com.tomas.chat_microservice.model.SenderType;
+import com.tomas.chat_microservice.Model.Message;
+import com.tomas.chat_microservice.Model.SenderType;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.List;
