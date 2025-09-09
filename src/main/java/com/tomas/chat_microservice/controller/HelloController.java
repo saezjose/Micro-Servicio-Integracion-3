@@ -12,7 +12,7 @@ public class HelloController {
     public Map<String, String> hello() {
         return Map.of(
                 "status", "ok",
-                "message", "Swagger funcionando"
+                "message", "Swagger funcionandooo"
         );
     }
 }
