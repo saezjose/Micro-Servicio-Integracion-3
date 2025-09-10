@@ -1,9 +1,12 @@
-package com.tomas.chat_microservice.Service;
+package com.tomas.chat_microservice.service;
 
-import com.tomas.chat_microservice.Model.User;
-import com.tomas.chat_microservice.Repository.UserRepository;
+import com.tomas.chat_microservice.model.Role;
+import com.tomas.chat_microservice.model.User;
+import com.tomas.chat_microservice.repository.UserRepository;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+
+import java.util.Optional;
 
 @Service
 public class UserService {
@@ -16,15 +19,31 @@ public class UserService {
         this.passwordEncoder = passwordEncoder;
     }
 
-    public User registerUser(String username, String password) {
+    // Registrar nuevo usuario
+    public User registerUser(String email, String password, Role role) {
         String hashed = passwordEncoder.encode(password);
-        User user = new User(username, hashed);
+        User user = User.builder()
+                .email(email)
+                .passwordHash(hashed)
+                .role(role)
+                .build();
         return userRepository.save(user);
     }
 
-    public boolean login(String username, String password) {
-        return userRepository.findByUsername(username)
-                .map(u -> passwordEncoder.matches(password, u.getPassword()))
+    // Verificar login
+    public boolean login(String email, String password) {
+        return userRepository.findByEmail(email)
+                .map(u -> passwordEncoder.matches(password, u.getPasswordHash()))
                 .orElse(false);
     }
+
+    // Buscar usuario por email
+    public Optional<User> findByEmail(String email) {
+        return userRepository.findByEmail(email);
+    }
+
+    public boolean existsByEmail(String email) {
+        return userRepository.existsByEmail(email);
+    }
+
 }

@@ -1,5 +1,7 @@
-package com.tomas.chat_microservice.security;
+package com.tomas.chat_microservice.Security;
 
+import com.tomas.chat_microservice.auth.JwtService;
+import io.jsonwebtoken.Claims;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
@@ -30,18 +32,28 @@ public class JwtAuthFilter extends OncePerRequestFilter {
             throws ServletException, IOException {
 
         String auth = request.getHeader(HttpHeaders.AUTHORIZATION);
+
         if (auth != null && auth.startsWith("Bearer ")) {
             String token = auth.substring(7);
-            var decoded = jwtService.validate(token);
-            if (decoded != null && SecurityContextHolder.getContext().getAuthentication() == null) {
-                var authentication = new UsernamePasswordAuthenticationToken(
-                        decoded.email(),
-                        null,
-                        List.of(new SimpleGrantedAuthority("ROLE_" + decoded.role()))
-                );
-                SecurityContextHolder.getContext().setAuthentication(authentication);
+            try {
+                Claims claims = jwtService.validateToken(token).getBody();
+                String email = claims.getSubject();
+                String role = claims.get("role", String.class);
+
+                if (email != null && SecurityContextHolder.getContext().getAuthentication() == null) {
+                    var authentication = new UsernamePasswordAuthenticationToken(
+                            email,
+                            null,
+                            List.of(new SimpleGrantedAuthority("ROLE_" + role))
+                    );
+                    SecurityContextHolder.getContext().setAuthentication(authentication);
+                }
+
+            } catch (Exception e) {
+                // Token inválido → no autenticamos
             }
         }
+
         filterChain.doFilter(request, response);
     }
 }

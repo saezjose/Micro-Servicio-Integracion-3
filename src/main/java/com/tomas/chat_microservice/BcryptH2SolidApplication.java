@@ -1,10 +1,11 @@
 package com.tomas.chat_microservice;
 
-import com.tomas.chat_microservice.Service.UserService;
+import com.tomas.chat_microservice.service.UserService;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
+import com.tomas.chat_microservice.model.Role;
 
 @SpringBootApplication
 public class BcryptH2SolidApplication {
@@ -16,13 +17,14 @@ public class BcryptH2SolidApplication {
     @Bean
     CommandLineRunner init(UserService userService) {
         return args -> {
-            userService.registerUser("fran", "secreto123");
+            if (!userService.existsByEmail("cliente@test.com")) {
+                userService.registerUser("cliente@test.com", "1234", Role.CLIENT);
+            }
+            if (!userService.existsByEmail("empresa@test.com")) {
+                userService.registerUser("empresa@test.com", "abcd", Role.COMPANY);
+            }
 
-            boolean loginOk = userService.login("fran", "secreto123");
-            System.out.println("Login exitoso: " + loginOk);
-
-            boolean loginFail = userService.login("fran", "otroPass");
-            System.out.println("Login fallido: " + loginFail);
+            System.out.println("Usuarios de prueba creados en H2 🚀");
         };
     }
 }

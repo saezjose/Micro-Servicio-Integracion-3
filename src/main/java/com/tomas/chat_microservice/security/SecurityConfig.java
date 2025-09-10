@@ -1,4 +1,4 @@
-package com.tomas.chat_microservice.security;
+package com.tomas.chat_microservice.Security;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
