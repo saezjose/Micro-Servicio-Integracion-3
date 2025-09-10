@@ -1,9 +1,10 @@
-package com.tomas.chat_microservice.repository;
+package com.tomas.chat_microservice.Repository;
 
-import com.tomas.chat_microservice.model.User;
+import com.tomas.chat_microservice.Model.User;
 import org.springframework.data.jpa.repository.JpaRepository;
+
 import java.util.Optional;
 
 public interface UserRepository extends JpaRepository<User, Long> {
-    Optional<User> findByEmail(String email);
+    Optional<User> findByUsername(String username);
 }

@@ -1,31 +1,29 @@
 package com.tomas.chat_microservice.service;
 
 import com.tomas.chat_microservice.model.Message;
+import com.tomas.chat_microservice.repository.MessageRepository;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collectors;
 
 @Service
 public class MessageService {
 
-    private final List<Message> messages = new ArrayList<>();
+    private final MessageRepository messageRepository;
 
-    // Agregar mensajes de prueba al iniciar
-    public MessageService() {
-        messages.add(new Message("Bob", "Alice", "Hola Alice!"));
-        messages.add(new Message("Charlie", "Alice", "Qué tal Alice?"));
-        messages.add(new Message("Alice", "Bob", "Hola Bob!"));
+    public MessageService(MessageRepository messageRepository) {
+        this.messageRepository = messageRepository;
     }
 
-    public void sendMessage(Message message) {
-        messages.add(message);
+    public Message sendMessage(Message message) {
+        return messageRepository.save(message);
     }
 
-    public List<Message> getMessagesByUser(String receiver) {
-        return messages.stream()
-                .filter(m -> m.getReceiver().equalsIgnoreCase(receiver))
-                .collect(Collectors.toList());
+    public List<Message> getMessagesByUser(Long userId) {
+        return messageRepository.findBySenderIdOrReceiverId(userId, userId);
+    }
+
+    public List<Message> getConversation(String conversationId) {
+        return messageRepository.findByConversationId(conversationId);
     }
 }
