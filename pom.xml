@@ -43,6 +43,7 @@
             <scope>runtime</scope>
         </dependency>
 
+
         <!-- Lombok (para getters/setters automáticos) -->
         <dependency>
             <groupId>org.projectlombok</groupId>
@@ -58,6 +59,7 @@
         </dependency>
 
         <!-- JWT -->
+      
         <dependency>
             <groupId>io.jsonwebtoken</groupId>
             <artifactId>jjwt-api</artifactId>
