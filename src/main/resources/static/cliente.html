@@ -3,36 +3,45 @@
 <head>
     <meta charset="UTF-8">
     <title>Cliente</title>
+    <link rel="stylesheet" href="estilos.css">
 </head>
 <body>
-<h2>Página Cliente</h2>
+<!-- Barra superior -->
+<div class="navbar">
+    <div class="logo">Sistema</div>
+</div>
 
-<button id="btnHome">Consultar /client/home</button>
-<button id="btnLogout">Cerrar Sesión</button>
+<div class="container">
+    <h2>Panel Cliente</h2>
+    <p>Opciones disponibles para CLIENTE</p>
 
-<pre id="output"></pre>
+    <!-- Botón que consulta /client/home con el token guardado -->
+    <button id="btnHome">Consultar /client/home</button>
 
+    <!-- Botón de logout -->
+    <button id="btnLogout">Cerrar Sesión</button>
+
+    <!-- Muestra respuesta del backend -->
+    <pre id="output"></pre>
+</div>
+
+<script src="auth.js"></script>
 <script>
-    const token = localStorage.getItem("token");
-    const rol = localStorage.getItem("rol");
+    // 1. Verifica que el usuario tenga rol CLIENTE
+    checkAccess("CLIENTE");
 
-    if (!token || rol !== "CLIENTE") {
-      window.location.href = "login.html";
-    }
-
+    // 2. Botón para consumir backend
     document.getElementById("btnHome").addEventListener("click", async () => {
-      const response = await fetch("http://localhost:8080/client/home", {
-        headers: { "Authorization": "Bearer " + token }
+      const token = localStorage.getItem("token"); // token guardado
+      const response = await fetch("/client/home", {
+        headers: { "Authorization": "Bearer " + token } // enviar token
       });
-
       const data = await response.json();
       document.getElementById("output").innerText = JSON.stringify(data, null, 2);
     });
 
-    document.getElementById("btnLogout").addEventListener("click", () => {
-      localStorage.clear();
-      window.location.href = "login.html";
-    });
+    // 3. Botón para cerrar sesión
+    document.getElementById("btnLogout").addEventListener("click", logout);
 </script>
 </body>
 </html>

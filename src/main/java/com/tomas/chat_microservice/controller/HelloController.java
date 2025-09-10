@@ -1,4 +1,4 @@
-package com.tomas.chat_microservice.Controller;
+package com.tomas.chat_microservice.controller;
 
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;

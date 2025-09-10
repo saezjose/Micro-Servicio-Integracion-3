@@ -1,6 +1,6 @@
-package com.tomas.chat_microservice.Controller;
-import com.tomas.chat_microservice.Model.Message;
-import com.tomas.chat_microservice.Service.MessageService;
+package com.tomas.chat_microservice.controller;
+import com.tomas.chat_microservice.model.Message;
+import com.tomas.chat_microservice.service.MessageService;
 
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;

@@ -1,6 +1,6 @@
-package com.tomas.chat_microservice.Service;
+package com.tomas.chat_microservice.service;
 
-import com.tomas.chat_microservice.Model.Message;
+import com.tomas.chat_microservice.model.Message;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
