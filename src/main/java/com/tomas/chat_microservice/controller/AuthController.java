@@ -10,7 +10,6 @@ record LoginRes(String token, String role, String email) {}
 @RestController
 @RequestMapping("/auth")
 public class AuthController {
-
     private final JwtService jwtService;
 
     public AuthController(JwtService jwtService) {

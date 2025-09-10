@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Empresa</title>
+    <link rel="stylesheet" href="estilos.css">
+</head>
+<body>
+<!-- Barra superior -->
+<div class="navbar">
+    <div class="logo">Sistema</div>
+</div>
+
+<div class="container">
+    <h2>Panel Empresa</h2>
+    <p>Opciones disponibles para EMPRESA</p>
+
+    <!-- Botón que consulta /company/home con el token -->
+    <button id="btnHome">Consultar /company/home</button>
+
+    <!-- Botón de logout -->
+    <button id="btnLogout">Cerrar Sesión</button>
+
+    <!-- Muestra respuesta del backend -->
+    <pre id="output"></pre>
+</div>
+
+<script src="auth.js"></script>
+<script>
+    // 1. Verifica que el usuario tenga rol EMPRESA
+    checkAccess("EMPRESA");
+
+    // 2. Botón para consumir backend
+    document.getElementById("btnHome").addEventListener("click", async () => {
+      const token = localStorage.getItem("token"); // token guardado
+      const response = await fetch("/company/home", {
+        headers: { "Authorization": "Bearer " + token } // enviar token
+      });
+      const data = await response.json();
+      document.getElementById("output").innerText = JSON.stringify(data, null, 2);
+    });
+
+    // 3. Botón para cerrar sesión
+    document.getElementById("btnLogout").addEventListener("click", logout);
+</script>
+</body>
+</html>

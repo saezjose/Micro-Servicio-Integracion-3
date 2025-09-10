@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Login</title>
+    <link rel="stylesheet" href="estilos.css">
+</head>
+<body>
+<!-- Barra superior -->
+<div class="navbar">
+    <div class="logo">Sistema</div>
+</div>
+
+<div class="container">
+    <h2>Iniciar Sesión</h2>
+
+    <!-- 1. Formulario de login -->
+    <form id="loginForm">
+        <label>Usuario:</label>
+        <input type="text" id="username" required>
+
+        <label>Contraseña:</label>
+        <input type="password" id="password" required>
+
+        <!-- Botón que llama a login() en auth.js -->
+        <button type="submit">Ingresar</button>
+    </form>
+
+    <!-- Mensajes de error -->
+    <p id="error" style="color:red;"></p>
+</div>
+
+<script src="auth.js"></script>
+<script>
+    // 2. Conectar formulario con login()
+    document.getElementById("loginForm").addEventListener("submit", login);
+</script>
+</body>
+</html>
