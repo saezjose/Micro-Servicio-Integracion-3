@@ -23,11 +23,10 @@ public class Message {
     @Column(nullable = false, length = 2000)
     private String content;
 
-    /** Quién envió el mensaje (CLIENTE/EMPRESA/SISTEMA, etc.) */
+    /** Ahora usamos Role (CLIENT / COMPANY) en vez de SenderType */
     @Enumerated(EnumType.STRING)
-    private SenderType senderType;
+    private Role role;
 
-    /** Para que @Builder respete el valor por defecto: */
     @Builder.Default
     @Column(nullable = false, updatable = false)
     private Instant createdAt = Instant.now();

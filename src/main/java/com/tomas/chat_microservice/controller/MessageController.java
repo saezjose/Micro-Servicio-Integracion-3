@@ -1,7 +1,7 @@
 package com.tomas.chat_microservice.controller;
 
 import com.tomas.chat_microservice.model.Message;
-import com.tomas.chat_microservice.model.SenderType;
+import com.tomas.chat_microservice.model.Role;
 import com.tomas.chat_microservice.service.MessageService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -53,7 +53,7 @@ public class MessageController {
         msg.setSenderId(null); // si no usas IDs numéricos aún
         msg.setReceiverId(null);
         msg.setConversationId(body.getOrDefault("conversationId", "default"));
-        msg.setSenderType(SenderType.CLIENTE); // o EMPRESA según lógica
+        msg.setRole(Role.CLIENT); // Cambia a Role.COMPANY según corresponda
         msg.setContent(body.get("content"));
         msg.setCreatedAt(Instant.now());
 
