@@ -1,8 +1,8 @@
 package com.tomas.chat_microservice.service;
 
 import com.tomas.chat_microservice.model.Role;
-import com.tomas.chat_microservice.model.User;
-import com.tomas.chat_microservice.repository.UserRepository;
+import com.tomas.chat_microservice.model.UserTemp;
+import com.tomas.chat_microservice.repository.UserRepositoryTemp;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -11,18 +11,18 @@ import java.util.Optional;
 @Service
 public class UserService {
 
-    private final UserRepository userRepository;
+    private final UserRepositoryTemp userRepository;
     private final PasswordEncoder passwordEncoder;
 
-    public UserService(UserRepository userRepository, PasswordEncoder passwordEncoder) {
+    public UserService(UserRepositoryTemp userRepository, PasswordEncoder passwordEncoder) {
         this.userRepository = userRepository;
         this.passwordEncoder = passwordEncoder;
     }
 
     // Registrar nuevo usuario
-    public User registerUser(String email, String password, Role role) {
+    public UserTemp registerUser(String email, String password, Role role) {
         String hashed = passwordEncoder.encode(password);
-        User user = User.builder()
+        UserTemp user = UserTemp.builder()
                 .email(email)
                 .passwordHash(hashed)
                 .role(role)
@@ -38,7 +38,7 @@ public class UserService {
     }
 
     // Buscar usuario por email
-    public Optional<User> findByEmail(String email) {
+    public Optional<UserTemp> findByEmail(String email) {
         return userRepository.findByEmail(email);
     }
 

@@ -7,11 +7,11 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 
 @Service
-public class MessageService {
+public class MessageServiceTemp {
 
     private final MessageRepository messageRepository;
 
-    public MessageService(MessageRepository messageRepository) {
+    public MessageServiceTemp(MessageRepository messageRepository) {
         this.messageRepository = messageRepository;
     }
 
