@@ -24,7 +24,7 @@ public class BcryptH2SolidApplication {
                 userService.registerUser("empresa@test.com", "abcd", Role.COMPANY);
             }
 
-            System.out.println("Usuarios de prueba creados en H22 🚀");
+            System.out.println("Usuarios de prueba creados en H2 🚀");
         };
     }
 }
