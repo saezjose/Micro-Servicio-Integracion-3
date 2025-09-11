@@ -10,6 +10,7 @@ public class BCryptPasswordEncoderImpl implements PasswordEncoder {
     private final BCryptPasswordEncoder encoder;
 
     public BCryptPasswordEncoderImpl() {
+        // Fuerza de 12 → costo razonable de seguridad
         this.encoder = new BCryptPasswordEncoder(12);
     }
 

@@ -1,6 +1,6 @@
 package com.tomas.chat_microservice.Security;
 
-import com.tomas.chat_microservice.auth.JwtService;
+import com.tomas.chat_microservice.domain.auth.JwtProvider;
 import io.jsonwebtoken.Claims;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
@@ -19,10 +19,10 @@ import java.util.List;
 @Component
 public class JwtAuthFilter extends OncePerRequestFilter {
 
-    private final JwtService jwtService;
+    private final JwtProvider jwtProvider;
 
-    public JwtAuthFilter(JwtService jwtService) {
-        this.jwtService = jwtService;
+    public JwtAuthFilter(JwtProvider jwtProvider) {
+        this.jwtProvider = jwtProvider;
     }
 
     @Override
@@ -31,16 +31,21 @@ public class JwtAuthFilter extends OncePerRequestFilter {
                                     FilterChain filterChain)
             throws ServletException, IOException {
 
+        String path = request.getServletPath();
+        if (path.startsWith("/auth")) {
+            filterChain.doFilter(request, response);
+            return;
+        }
+
         String auth = request.getHeader(HttpHeaders.AUTHORIZATION);
 
         if (auth != null && auth.startsWith("Bearer ")) {
             String token = auth.substring(7);
             try {
-                Claims claims = jwtService.validateToken(token).getBody();
-                String email = claims.getSubject();
-                String role = claims.get("role", String.class);
+                if (jwtProvider.validateToken(token)) {
+                    String email = jwtProvider.extractClaim(token, "email", String.class);
+                    String role = jwtProvider.extractClaim(token, "role", String.class);
 
-                if (email != null && SecurityContextHolder.getContext().getAuthentication() == null) {
                     var authentication = new UsernamePasswordAuthenticationToken(
                             email,
                             null,
@@ -48,12 +53,12 @@ public class JwtAuthFilter extends OncePerRequestFilter {
                     );
                     SecurityContextHolder.getContext().setAuthentication(authentication);
                 }
-
             } catch (Exception e) {
-                // Token inválido → no autenticamos
+                // Token inválido → ignoramos
             }
         }
 
         filterChain.doFilter(request, response);
+        System.out.println(">> JwtAuthFilter interceptando: " + request.getServletPath());
     }
 }

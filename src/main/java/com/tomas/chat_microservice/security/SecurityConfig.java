@@ -20,25 +20,13 @@ public class SecurityConfig {
 
     @Bean
     SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
+        System.out.println(">>> SecurityConfig cargado OK");
         http
 
                 .csrf(csrf -> csrf.disable())
                 .sessionManagement(s -> s.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .authorizeHttpRequests(auth -> auth
-                        .requestMatchers(
-                                "/v3/api-docs/**",
-                                "/swagger-ui/**",
-                                "/swagger-ui.html",
-                                "/",
-                                "/index.html",
-                                "/script.js",
-                                "/auth/**",
-
-                                "/h2-console/**"
-                        ).permitAll()
-                        .requestMatchers("/client/**").hasRole("CLIENT")
-                        .requestMatchers("/company/**").hasRole("COMPANY")
-                        .anyRequest().authenticated()
+                        .anyRequest().permitAll()
                 )
 
                 .headers(headers -> headers.frameOptions(frame -> frame.sameOrigin()))
