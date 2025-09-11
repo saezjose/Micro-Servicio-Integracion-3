@@ -2,7 +2,7 @@ package com.tomas.chat_microservice.controller;
 
 import com.tomas.chat_microservice.model.Message;
 import com.tomas.chat_microservice.model.SenderType;
-import com.tomas.chat_microservice.service.MessageServiceTemp;
+import com.tomas.chat_microservice.service.MessageService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.web.bind.annotation.*;
@@ -16,9 +16,9 @@ import java.util.Map;
 @Tag(name = "Mensajes", description = "Operaciones para enviar y recibir mensajes")
 public class MessageController {
 
-    private final MessageServiceTemp messageService;
+    private final MessageService messageService;
 
-    public MessageController(MessageServiceTemp messageService) {
+    public MessageController(MessageService messageService) {
         this.messageService = messageService;
     }
 
